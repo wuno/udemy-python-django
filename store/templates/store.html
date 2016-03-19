@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html>
-<head lang="en">
-	<title>
-	UDEMY Django Application
-	</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+Store page
+After login you will be returned to this page.
+
 Welcome to the Book Store! There are {{ count }} books in stock.
-</body>
-</html>
+
+{% endblock %}

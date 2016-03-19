@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title> </title>
-</head>
-<body>
-<h1>Thank you for registering. Please check your email for activation.</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<p>{% trans "You are now registered. Activation email sent." %}</p>
+{% endblock %}
