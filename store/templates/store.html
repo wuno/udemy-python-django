@@ -2,9 +2,16 @@
 {% load i18n %}
 
 {% block content %}
-Store page
-After login you will be returned to this page.
-
-Welcome to the Book Store! There are {{ count }} books in stock.
-
+{% if request.user.is_authenticated %}
+<h4>
+Welcome {% if request.user.first_name %}
+{{ request.user.first_name }}
+{% else %}
+{{ request.user.username }}
+{% endif %}!
+</h4>
+{% else %}
+<h4>Woops, looks like you are not a member. Would you like to login? <a href="{% url 'auth_login' %}">Login / Register</a></h4>
+{% endif %}
+<p>You have {{ count }} books in your bookstore. Your location is {{ request.session.location }}</p>
 {% endblock %}
