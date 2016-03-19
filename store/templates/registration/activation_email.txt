@@ -1,0 +1,5 @@
+Thank you for registering at our website. Please click the link below to activate your account. 
+
+http://{{ site.domain }}{% url 'registration_activate' activation_key %}
+
+If you recieved this email by error please disregard it. 
