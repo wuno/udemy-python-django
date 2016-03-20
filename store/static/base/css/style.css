@@ -252,3 +252,7 @@ img.bg {
 		text-align: right;
 		margin-top: 20px;
 }
+
+.col-md-8.col-md-offset-2.col-sm-12.maincontent {
+    padding-top: 120px !important;
+}

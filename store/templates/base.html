@@ -2,9 +2,10 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
 {% load bootstrap_themes %}
-{% load bootstrap_themes %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% bootstrap_styles theme='simplex' type='min.css' %}
-{% load i18n %}
+
 
 {% block bootstrap3_extra_head %}
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css" />
@@ -13,6 +14,8 @@
 {% block bootstrap3_title %}
     {% block title %}{{ page|title }}{% endblock %}</title>
 {% endblock %}
+
+{% bootstrap_messages %}
 
 {% block bootstrap3_content %}
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,11 +33,6 @@
                 <li class="hvr-curl-top-right"><a href="{% url 'index' %}">Home</a></li>
                 <li class="hvr-curl-top-right"><a href="#about">About</a></li>
                 <li class="hvr-curl-top-right"><a href="#contact">Contact</a></li>
-                <li class="hvr-curl-top-right"><a href="{% url 'auth_login' %}">Login</a></li>
-                <li class="hvr-curl-top-right"><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a></li>
-     <li><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a></li>
-     <li><a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a></li>
-    <li><a href="{% url 'auth_password_change' %}">{% trans "Change password" %}</a></li>
               </ul>
       <div class="navbar-form pull-right">
             {% if request.user.is_authenticated %}
@@ -42,9 +40,11 @@
                 {{ request.user.first_name }}
                     {% else %}
                       {{ request.user.username }}
-                          {% endif %}! <a href="{% url 'auth_logout' %}">Log Out</a> 
+                          {% endif %}! 
+                          <a href="{% url 'auth_password_change' %}">Change Password</a> |
+                          <a href="{% url 'auth_logout' %}">Log Out</a> 
             {% else %}
-                Ouch... You still have not logged in <a href="{% url 'auth_login' %}">Login</a> or
+                Ouch... You still have not logged in | <a href="{% url 'auth_login' %}">Login</a> or
                 <a href="{% url 'registration_register' %}">Register</a> 
              {% endif %}
       </div>
@@ -53,11 +53,11 @@
 </div>
 
 <div class="container-fluid">
-<img src="{% static 'base/img/header_full.jpg' %}" class="bg" />
+
 <div class="parallax">
       <div class="row">
-    {% block body %}
-      <div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
+            <div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
+    {% block content %}
           Welcome to the Super App!
       </div>
     {% endblock %}

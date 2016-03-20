@@ -1,11 +1,71 @@
-{% extends "base.html" %}
-{% load i18n %}
-
+{% extends 'base.html' %}
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
+<div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 loginbox">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<div class="panel-title">Register Your Account</div>
+			</div>
+			<div class="panel-body">
+				<form method="post" action="." class="form-horizontal" role="form">
+				{% csrf_token %}
+				<div id="signupalert" style="display:none" class="alert alert-danger">
+				<p>Error</p>
+				<span></span>
+				</div>
 
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
+				<div class="form-group">
+	<label for="id_username" class="col-md-3 control-label">Username</label>
+	<div class="col-md-6">
+	<input id="id_username" type="text" class="form-control" name="username" placeholder="Username"> 
+				</div>
+				</div>
+
+	<div class="form-group">
+	<label for="id_email" class="col-md-3 control-label">Email</label>
+	<div class="col-md-6">
+	<input id="id_email" type="text" class="form-control" name="email" placeholder="Email Address"> 
+				</div>
+				</div>
+
+	<div class="form-group">
+	<label for="id_password1" class="col-md-3 control-label">Password</label>
+	<div class="col-md-6">
+	<input id="id_password1" type="password" class="form-control" name="id_password1" placeholder="Password"> 
+				</div>
+				</div>
+
+					<div class="form-group">
+	<label for="id_password2" class="col-md-3 control-label">Password</label>
+	<div class="col-md-6">
+	<input id="id_password2" type="password" class="form-control" name="id_password2" placeholder="Password"> 
+				</div>
+				</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+			<button id="btn_signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Register</button> 
+				</div>
+			</div>
+
+			<div class="form-group" style="border-top: 1px solid #999; padding-top:30px; margin-top:-30px;z-index: 0;">
+			<div class="col-md-offset-3 col-md-8">
+			<a href="btn btn-block btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}"><i class="fa fa-facebook"></i>Signup With Facebook</a>
+			</div>
+				</div>
+
+			<div style="border-top: 0px" class="form-group">
+			<div class="col-md-offset-3 col-md-8">
+			<a href="btn btn-block btn-social btn-google" href="{% url 'social:begin' 'google' %}"><i class="fa fa-google"></i>Signup With Google</a>
+			</div>
+			</div>
+
+			<div style="border-top: 0px" class="form-group">
+			<div class="col-md-offset-3 col-md-8">
+			<a href="btn btn-block btn-social btn-twitter" href="{% url 'social:begin' 'twitter' %}"><i class="fa fa-twitter"></i>Signup With Twitter</a>
+			</div>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}
