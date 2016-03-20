@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -24,3 +23,40 @@ class Review(models.Model):
 	publish_date = models.DateField(default=timezone.now)
 	text = models.TextField()
 	
+class Cart(models.Model):
+	user = models.ForeignKey(User)
+	active = models.BooleanField(default=True)
+	order_date = models.DateField(null=True)
+	payment_type = models.CharField(max_length=100, null=True)
+	payment_id = models.CharField(max_length=100, null=True)
+
+	def add_to_cart(self, book_id):
+		book = Book.objects.get(pk=book_id)
+		try:
+			preexisting_order = BookOrder.objects.get(book=book, cart=self)
+			preexisting_order.quantity += 1
+			preexisting_order.save()
+		except BookOrder.DoesNotExist:
+			new_order = BookOrder.objects.create(
+				book=book,
+				cart=self,
+				quantity=1
+				)
+			new_order.save()
+
+	def remove_to_cart(self, book_id):
+		book = Book.objects.get(pk=book_id)
+		try:
+			preexisting_order = BookOrder.objects.get(book=book, cart=self)
+			if preexisting_order.quantity > 1:
+				preexisting_order.quantity -= 1
+				preexisting_order.save()
+			else:
+				preexisting_order.delete()
+		except BookOrder.DoesNotExist:
+			pass
+
+class BookOrder(models.Model):
+	book = models.ForeignKey(Book)
+	cart = models.ForeignKey(Cart)
+	quantity = models.IntegerField()

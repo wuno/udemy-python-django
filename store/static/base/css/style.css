@@ -311,3 +311,56 @@ img.bg {
   display: block;
   font-weight: bold;
 }
+
+/* Shopping Cart Styles */
+.storefront_add_to_cart {
+    display: block;
+  margin-top: 10px;
+}
+  
+/* Cart Style*/
+
+.cart_container {
+  display: block;
+  max_width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cart_item {
+    width: 100%;
+  margin-top: 20px;
+  display: block;
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
+
+.cart_listing {
+    display: inline-block;
+  width: 50%;
+}
+
+.cart_listing.title {
+    display: block;
+  font-weight: bold;
+}
+
+.cart_price{
+    display: inline-block;
+  text-align: right;
+  width: 49%;
+  vertical-align: top;
+}
+
+.cart_value {
+    font-weight: bold;
+}
+
+.cart_quantity {
+    display: block;
+}
+
+.cart_total {
+     text-align: right;
+   margin-top: 20px;
+}

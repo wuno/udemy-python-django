@@ -38,6 +38,9 @@
                 <li class="hvr-curl-top-right"><a href="{% url 'index' %}">Home</a></li>
                 <li class="hvr-curl-top-right"><a href="#about">About</a></li>
                 <li class="hvr-curl-top-right"><a href="#contact">Contact</a></li>
+          {% if request.user.is_authenticated %}
+        <li class="hvr-curl-top-right"><a href="{% url 'cart' %}">Shopping Cart</a></li>
+         {% endif %}
               </ul>
       <div class="navbar-form pull-right">
             {% if request.user.is_authenticated %}
@@ -59,26 +62,30 @@
 
 <div class="container-fluid">
 
-<div class="parallax">
+    <div class="parallax">
       <div class="row">
-            <div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
-    {% block content %}
-    <div style="text-align:center">
-    <h3>Welcome to the Book Store!</h3></div>
-     {% for book in books %}
-     <a href="{% url 'book_details' book.id %}">
-     <div class="storefront_book_display">
-        <img src="{% static 'base/img/empty_cover.jpg' %}">
-        <span class="storefront_book_title">{{ book.title }}</span>
-        <span class="storefront_book_author">{{ book.author }}</span>
+       {% block content %}
+     <div class="col-md-8 col-md-offset-2 col-sm-12 maincontent">
+       <div style= "text-align:center"><h3>Welcome to our store!</h3></div>    
+       {% for book in books %}
+       <div class="storefront_book_display">
+       <a href="{% url 'book_details' book.id %}">
+           <img src="{% static 'base/img/empty_cover.jpg' %}">
+         <span class="storefront_book_title">{{ book.title }}</span>
+         <span class="storefront_book_author">{{ book.author }}</span>
+         </a>
+         {% if request.user.is_authenticated %}
+         <span class="storefront_add_to_cart">
+             <a href="{% url 'add_to_cart' book.id %}">[Add to Cart]</a>
+         </span>
+         {% endif %}
+      </div>
+      {% endfor %}  
      </div>
-     </a>
-     {% endfor %}
-    {% endblock %}
-     </div>
+     {% endblock %}
+    </div>
     </div>
   </div>
-</div>
 
 <div class="row text-center navbar footer">
     <div class="col-md-12">
