@@ -143,12 +143,11 @@ LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.mailgun.org"                                          
-EMAIL_HOST_USER= "*put the login from the mailgun website*"
-EMAIL_HOST_USER= "*put the smtp login from the mailgun website*"
-EMAIL_HOST_PASSWORD = "PASSWORD"
+EMAIL_HOST_USER= ""
+EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "FROMEMAIL"
+DEFAULT_FROM_EMAIL = ""
 
 # Social Auth - Facebook
 SOCIAL_AUTH_FACEBOOK_KEY = ""

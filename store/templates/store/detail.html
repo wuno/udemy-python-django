@@ -22,16 +22,35 @@
 			 {% endif %}
 			  <h4 style="margin-top:20px;">You Are Reviewing From:</h4>
 				 <div id="map-canvas" class="detail_book_reviews_map"></div>
-				 <script>
+				<script>
 				 var map;
+				 var marker;
+				 var reviews = ();
+				 {% for review in reviews %}
+				 reviews[{{review.id}}] = {
+					name: "{{ review.user.username }}",
+					lat: "{{ review.latitude }}",
+					lng: "{{ review.longitude}}"
+				};
+				{% endfor %}
 				 function initialize() {
 					map = new google.maps.Map(document.getElementById('map-canvas'), {
-						zoom: 8,
+						zoom=8,
 						center: {lat: {{ geo_info.latitude }}, lng: {{ geo_info.longitude }}}
 						});
-					}
-					google.maps.event.addDomListener(window, 'load', initialize);
-					</script>
+				 $.each(reviews, function(i, val) {
+					var review = val;
+					var center = new google.maps.LatLng(review.lat, review.lng);
+					var title = review.name;
+					marker = new google.maps.Marker({
+						map: map,
+						position: center,
+						title: title
+					});
+				 });
+				 }
+				 google.maps.event.addDomListener(window, 'load', initialize);
+				</script>
 			 {% for review in reviews %}
 				<div>
 					{{ review.text }}
