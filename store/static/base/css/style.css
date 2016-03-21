@@ -364,3 +364,12 @@ img.bg {
      text-align: right;
    margin-top: 20px;
 }
+/* Map Styles */
+.detail_book_reviews_map{
+  width: 500px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-right: 20px;
+}
