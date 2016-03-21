@@ -1,0 +1,7 @@
+<p>Hello {{ username }}, thank you for your review!</p>
+<p>Your discount code is {{ code }}, this is good for 10 percent off 
+of your next purchase.</p>
+
+<p>See ya later!</p>
+
+<p>The Book Store</p>

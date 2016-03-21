@@ -139,10 +139,12 @@ REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged
 LOGIN_REDIRECT_URL = '/store/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
 
+
 # Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "YOUREMAIL"
+EMAIL_HOST = "smtp.mailgun.org"                                          
+EMAIL_HOST_USER= "*put the login from the mailgun website*"
+EMAIL_HOST_USER= "*put the smtp login from the mailgun website*"
 EMAIL_HOST_PASSWORD = "PASSWORD"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
