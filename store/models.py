@@ -52,7 +52,7 @@ class Cart(models.Model):
 				)
 			new_order.save()
 
-	def remove_to_cart(self, book_id):
+	def remove_from_cart(self, book_id):
 		book = Book.objects.get(pk=book_id)
 		try:
 			preexisting_order = BookOrder.objects.get(book=book, cart=self)

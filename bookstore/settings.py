@@ -20,7 +20,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'store',
+    'store', 
     'registration',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'bootstrap_themes',
     'compressor',
+    'tastypie', 
 ]
 
 MIDDLEWARE_CLASSES = [
