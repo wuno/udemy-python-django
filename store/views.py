@@ -6,6 +6,7 @@ from django.http import JsonResponse
 import paypalrestsdk, stripe
 
 from . models import Book, BookOrder, Cart, Review
+from .forms import ReviewForm
 
 def index(request):
 	    return render(request, 'template.html')
@@ -18,17 +19,33 @@ def store (request):
 	return render(request, 'base.html', context)
 
 
-def book_details(request, book_id):
+def book_details(request,book_id):
+	book = Book.objects.get(pk=book_id)
 	context = {
-	'book': Book.objects.get(pk=book_id),
+	'book': book,
 	}
-	return render(request, 'store/detail.html', context)
+	if request.user.is_authenticated():
+		if request.method== "POST":
+			form = ReviewForm(request.POST)
+			if form.is_valid():
+				new_review = Review.objects.create (
+				user= request.user,
+				book= context['book'],
+				text=form.cleaned_data.get('text')
+					)
+				new_review.save()
+		else:
+			if Review.objects.filter(user=request.user, book=context['book']).count() == 0:
+				form= ReviewForm()
+				context['form']= form
+	context['reviews']= book.review_set.all()
+	return render(request,'store/detail.html',context)
 
 
-def add_to_cart(request, book_id):
+def add_to_cart(request,book_id):
 	    if request.user.is_authenticated():
 	    	try:
-	    		book = Book.objects.get(pk = book_id)
+	    		book = Book.objects.get(pk=book_id)
 	    	except ObjectDoesNotExist:
 	    		pass
 	    	else :
