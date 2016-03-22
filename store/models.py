@@ -9,7 +9,6 @@ class Author(models.Model):
 	def __unicode__(self): 
 		return "%s, %s" % (self.last_name, self.first_name)
 
-
 def cover_upload_path(instance,filename):
 	return '/'.join(['books',str(instance.id),filename])
 
@@ -22,6 +21,9 @@ class Book(models.Model):
 	price = models.DecimalField(decimal_places=2, max_digits=8)
 	stock = models.IntegerField(default=0)
 	cover_image = models.ImageField(upload_to=cover_upload_path, default='books/empty_cover.jpg')
+	
+	def __unicode__(self):
+		return "%s" % (self.title)
 
 class Review(models.Model):
 	book = models.ForeignKey(Book)
@@ -38,6 +40,9 @@ class Cart(models.Model):
 	payment_type = models.CharField(max_length=100, null=True)
 	payment_id = models.CharField(max_length=100, null=True)
 
+	def __unicode__(self): 
+			return "%s" % (self.user)
+
 	def add_to_cart(self, book_id):
 		book = Book.objects.get(pk=book_id)
 		try:
@@ -51,6 +56,10 @@ class Cart(models.Model):
 				quantity=1
 				)
 			new_order.save()
+			
+			def __unicode__(self):
+				return "%s" % (self.book_id)
+
 
 	def remove_from_cart(self, book_id):
 		book = Book.objects.get(pk=book_id)
@@ -69,3 +78,6 @@ class BookOrder(models.Model):
 	book = models.ForeignKey(Book)
 	cart = models.ForeignKey(Cart)
 	quantity = models.IntegerField()
+
+	def __unicode__(self): 
+		return "%s, %s, %s" % (self.book, self.cart, self.quantity)

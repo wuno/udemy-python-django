@@ -8,7 +8,7 @@ from django.template import Context
 from django.template.loader import render_to_string 
 from django.contrib.gis.geoip import GeoIP
 
-from . models import Book, BookOrder, Cart, Review
+from .models import Book, BookOrder, Cart, Review
 from .forms import ReviewForm
 
 import paypalrestsdk, stripe
@@ -69,6 +69,7 @@ def book_details(request,book_id):
 				context['form'] = form
 				context['reviews']= book.review_set.all()
 				return render(request,'store/detail.html',context)
+
 
 
 def add_to_cart(request,book_id):
