@@ -7,6 +7,10 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import Context
 from django.template.loader import render_to_string 
 from django.contrib.gis.geoip import GeoIP
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
 
 from .models import Book, BookOrder, Cart, Review
 from .forms import ReviewForm
@@ -71,38 +75,26 @@ def book_details(request,book_id):
 				return render(request,'store/detail.html',context)
 
 
-
+@login_required
 def add_to_cart(request,book_id):
-	    if request.user.is_authenticated():
-	    	try:
-	    		book = Book.objects.get(pk=book_id)
-	    	except ObjectDoesNotExist:
-	    		pass
-	    	else :
-	    		try:
-	    			cart = Cart.objects.get(user = request.user, active = True)
-	    		except ObjectDoesNotExist:
-	    			cart = Cart.objects.create(user = request.user)
-	    			cart.save()
-	    			cart.add_to_cart(book_id)
-	    			return redirect('cart')
-	    		else:
-	    			return redirect('index')
+    book = get_object_or_404(Book, pk=book_id)
+    cart,created = Cart.objects.get_or_create(user=request.user, active=True)
+    order,created = BookOrder.objects.get_or_create(book=book,cart=cart)
+    order.quantity += 1
+    order.save()
+    messages.success(request, "Cart updated!")
+    return redirect('cart')
 
 
-def remove_from_cart(request, book_id):
-	if request.user.is_authenticated():
-		try:
-			book = Book.objects.get(pk = book_id)
-		except ObjectDoesNotExist:
-			pass 
-		else:
-			cart = Cart.objects.get(user = request.user, active = True)
-	    	cart.remove_from_cart(book_id)
-		return redirect('cart')
-	else:
-		return redirect('index')
-
+@login_required
+def remove_from_cart(request,book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    cart,created = Cart.objects.get_or_create(user=request.user, active=True)
+    order,created = BookOrder.objects.get_or_create(book=book,cart=cart)
+    order.quantity += 1
+    order.save()
+    messages.success(request, "Cart updated!")
+    return redirect('cart')
 
 def cart(request):
 	if request.user.is_authenticated():
@@ -190,7 +182,7 @@ def checkout_paypal(request,cart,orders):
 
 
 def checkout_stripe(cart,orders,token):
-	stripe.api_key = "APIKEY"
+	stripe.api_key = "API_KEY"
 	total = 0
 	for order in orders:
 		total += (order.book.price * order.quantity)

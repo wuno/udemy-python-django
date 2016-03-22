@@ -43,41 +43,11 @@ class Cart(models.Model):
 	def __unicode__(self): 
 			return "%s" % (self.user)
 
-	def add_to_cart(self, book_id):
-		book = Book.objects.get(pk=book_id)
-		try:
-			preexisting_order = BookOrder.objects.get(book=book, cart=self)
-			preexisting_order.quantity += 1
-			preexisting_order.save()
-		except BookOrder.DoesNotExist:
-			new_order = BookOrder.objects.create(
-				book=book,
-				cart=self,
-				quantity=1
-				)
-			new_order.save()
-			
-			def __unicode__(self):
-				return "%s" % (self.book_id)
-
-
-	def remove_from_cart(self, book_id):
-		book = Book.objects.get(pk=book_id)
-		try:
-			preexisting_order = BookOrder.objects.get(book=book, cart=self)
-			if preexisting_order.quantity > 1:
-				preexisting_order.quantity -= 1
-				preexisting_order.save()
-			else:
-				preexisting_order.delete()
-		except BookOrder.DoesNotExist:
-			pass
-
 
 class BookOrder(models.Model):
 	book = models.ForeignKey(Book)
 	cart = models.ForeignKey(Cart)
-	quantity = models.IntegerField()
+	quantity = models.IntegerField(default=0)
 
 	def __unicode__(self): 
 		return "%s, %s, %s" % (self.book, self.cart, self.quantity)
