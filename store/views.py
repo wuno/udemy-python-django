@@ -86,15 +86,19 @@ def add_to_cart(request,book_id):
     return redirect('cart')
 
 
-@login_required
-def remove_from_cart(request,book_id):
-    book = get_object_or_404(Book, pk=book_id)
-    cart,created = Cart.objects.get_or_create(user=request.user, active=True)
-    order,created = BookOrder.objects.get_or_create(book=book,cart=cart)
-    order.quantity += 1
-    order.save()
-    messages.success(request, "Cart updated!")
-    return redirect('cart')
+def remove_from_cart(request, book_id):
+    if request.user.is_authenticated():
+        try:
+            book = Book.objects.get(pk = book_id)
+        except ObjectDoesNotExist:
+            pass 
+        else:
+        	cart = Cart.objects.get(user = request.user, active = True)
+        	cart.remove_from_cart(book_id)
+        return redirect('cart')
+    else:
+        return redirect('index')
+
 
 def cart(request):
 	if request.user.is_authenticated():
@@ -103,7 +107,7 @@ def cart(request):
 		total = 0
 		count = 0
 		for order in orders:
-			total += (order.book.price * order.quantity)
+			total += order.book.price * order.quantity
 			count += order.quantity
 			context = {
 			'cart': orders,

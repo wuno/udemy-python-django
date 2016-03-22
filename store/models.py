@@ -43,6 +43,18 @@ class Cart(models.Model):
 	def __unicode__(self): 
 			return "%s" % (self.user)
 
+	def remove_from_cart(self, book_id):
+		book = Book.objects.get(pk=book_id)
+		try:
+			preexisting_order = BookOrder.objects.get(book=book, cart=self)
+			if preexisting_order.quantity > 1:
+				preexisting_order.quantity -= 1
+				preexisting_order.save()
+			else:
+				preexisting_order.delete()
+		except BookOrder.DoesNotExist:
+			pass
+
 
 class BookOrder(models.Model):
 	book = models.ForeignKey(Book)
