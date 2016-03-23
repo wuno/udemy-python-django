@@ -109,22 +109,23 @@ def remove_from_cart(request, book_id):
 
 
 def cart(request):
-	if request.user.is_authenticated():
-		cart = Cart.objects.filter(user=request.user.id, active = True)
-		orders = BookOrder.objects.filter(cart=cart)
-		total = 0
-		count = 0
-		for order in orders:
-			total += order.book.price * order.quantity
-			count += order.quantity
-			context = {
-			'cart': orders,
-			'total': total,
-			'count': count,
-			}
-			return render(request, 'store/cart.html', context)
-		else:
-			return redirect('index') 
+    if request.user.is_authenticated():
+        cart = Cart.objects.filter(user=request.user.id, active = True)
+        orders = BookOrder.objects.filter(cart=cart)
+        total = 0
+        count = 0
+        for order in orders:
+            total += order.book.price * order.quantity
+            count += order.quantity
+        #Indentation needs to be offset by one level from here on
+        context = {
+            'cart': orders,
+            'total': total,
+            'count': count,
+        }
+        return render(request, 'store/cart.html', context)
+    else:
+        return redirect('index') 
 
 
 def checkout(request,processor):
