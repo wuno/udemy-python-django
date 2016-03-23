@@ -11,22 +11,29 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
+import string 
+import random
+import paypalrestsdk, stripe
 
 from .models import Book, BookOrder, Cart, Review
 from .forms import ReviewForm
 
-import paypalrestsdk, stripe
-
+import logging
+logger= logging.getLogger(__name__)
 
 def index(request):
 	    return render(request, 'template.html')
 
 def store (request):
-	books = Book.objects.all()
-	context = {
-	'books': books,
-	}
-	return render(request, 'base.html', context)
+		i =0
+		while i<50:
+			logger.debug("test log: %d % i")
+			i+=1
+			books = Book.objects.all()
+			context = {
+			'books': books,
+			}
+			return render(request, 'base.html', context)
 
 
 def book_details(request,book_id):

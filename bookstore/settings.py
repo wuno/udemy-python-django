@@ -164,3 +164,33 @@ SOCIAL_AUTH_TWITTER_KEY = ""
 SOCIAL_AUTH_TWITTER_SECRET = ""
 
 GEOIP_PATH = 'geo/'
+
+LOGGING= {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'basic': {
+            'format': '%(ascttime)s %(name)-20s %(levelname)-8s %(module)s | %(message)s'
+        },
+    },
+    'handlers': {
+        'file':{
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'basic',
+            'maxBytes': 10000,
+            'backupCount': 10,
+            'filename': os.path.join(BASE_DIR, 'store-logger.log'),
+        },
+    },
+    'loggers': {
+        'store': {
+            'handlers':['file'],
+            'level': 'DEBUG',
+        },
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        }
+    }
+}
