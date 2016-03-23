@@ -30,6 +30,7 @@ def store (request):
 
 
 def book_details(request,book_id):
+	book = get_object_or_404(Book, pk=book_id)
 	book = Book.objects.get(pk=book_id)
 	context = {
 	'book': book,
