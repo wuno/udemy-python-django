@@ -38,6 +38,7 @@
 						zoom=8,
 						center: {lat: {{ geo_info.latitude }}, lng: {{ geo_info.longitude }}}
 						});
+			$.getJSON('/api/v1/review/?&book_id={{ book.id }}', function(data) {
 				 $.each(reviews, function(i, val) {
 					var review = val;
 					var center = new google.maps.LatLng(review.lat, review.lng);
@@ -47,7 +48,8 @@
 						position: center,
 						title: title
 					});
-				 });
+				});
+			});
 				 }
 				 google.maps.event.addDomListener(window, 'load', initialize);
 				</script>
