@@ -1,0 +1,9 @@
+<p>Hello {{ username }}, thanks for buying your shiny new books with us! Here is what you have got coming your way:</p>
+
+{% for order in orders %}
+<p>{{ order.quantity }} x {{ order.book.title }} by {{ order.book.author }}</p>
+{% endfor %}
+
+<p>Ciao for now!</p>
+
+<p>Super Cool Bookstore!</p>
